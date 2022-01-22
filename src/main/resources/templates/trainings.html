@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<!-- Page content goes here -->
+<div class="container">
+    <div class="jumbotron">
+     <form method="post" action="/training/save" th:object="${trainingDto}">
+
+            <fieldset>
+                <table>
+                    <thead>
+                    <tr>
+                        <th> Nazwa</th>
+                        <th> Dystans</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="training, itemStat : ${trainingDto.trainings}">
+                        <td >  <input type="text" th:name="${training.name}" th:value="${training.name}" th:field="*{training.name}" /></td>
+                        <td ><a th:field="${training.distance}" ></a></td>
+<!--                        <input type="checkbox" th:field="*{covered}" /-->
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <input type="submit" id="submitButton" th:value="Save">
+        </form>
+    </div>
+</div>
+</body>
+</html>
