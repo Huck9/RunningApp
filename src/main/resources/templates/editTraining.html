@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<!-- Page content goes here -->
+<div class="container">
+    <div class="jumbotron">
+        <h1>Dodanie treningu</h1>
+        <form th:action="@{/training/saveEdit}" th:object="${training}" method="post">
+            <input th:hidden="true" th:field="*{id}">
+            Nazwa treningu: <input type="text" th:field="*{name}" placeholder="Nazwa trenigu"><br>
+            Czas trwania: <input type="time" th:field="*{movingTime}" step="1" placeholder="Czas trwania"> <br>
+            Dystans: <input type="number" th:field="*{distance}" step="0.01" placeholder="0"> km<br>
+            Typ treningu <select class="form-select" aria-label="Typ treninngu" th:field="*{workoutType}">
+            <option th:value="'Run'">Bieganie</option>
+            <option th:value="'Cycling'">Rower</option>
+            <option th:value="'Swim'">Pływanie</option>
+        </select>         <br>
+            Data treningu: <input type="datetime-local" th:field="*{startDate}"> <br>
+            Średnia prędkość: <input type="number" th:field="*{avgSpeed}" step="0.01" placeholder="7.00">km/h <br>
+            Średnie tempo: <input th:field="*{avgPace}" type=time min="0:00" max="100:59">min/km <br>
+            Spalone kalorie: <input type="number" th:field="*{calories}" step="1" placeholder="0">kcal <br>
+
+            <input type="submit" value="Zapisz">
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

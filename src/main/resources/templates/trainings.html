@@ -6,26 +6,64 @@
 <!-- Page content goes here -->
 <div class="container">
     <div class="jumbotron">
-     <form method="post" action="/training/save" th:object="${trainingDto}">
+        <form method="post" th:action="@{/training/analize}" th:object="${trainingDto}">
 
             <fieldset>
                 <table>
                     <thead>
                     <tr>
-                        <th> Nazwa</th>
-                        <th> Dystans</th>
+                        <th class="naglowek">Analiza</th>
+                        <th class="naglowek">Nazwa</th>
+                        <th class="naglowek">Dystans</th>
+                        <th class="naglowek">Typ treningu</th>
+                        <th class="naglowek">Czas trwania</th>
+                        <th class="naglowek">Data rozpoczęcia</th>
+                        <th class="naglowek">Średnia prędkość</th>
+                        <th class="naglowek">Średnie tempo</th>
+                        <th class="naglowek">Kalorie</th>
+                        <th class="naglowek">Akcje</th>
                     </tr>
                     </thead>
                     <tbody>
+
                     <tr th:each="training, itemStat : ${trainingDto.trainings}">
-                        <td >  <input type="text" th:name="${training.name}" th:value="${training.name}" th:field="*{training.name}" /></td>
-                        <td ><a th:field="${training.distance}" ></a></td>
-<!--                        <input type="checkbox" th:field="*{covered}" /-->
+                        <input type="text" th:field="*{trainings[__${itemStat.index}__].id}" th:hidden="true"/>
+                        <td><input type="checkbox" name="mycheckbox"
+                                   th:field="*{trainings[__${itemStat.index}__].imported}"
+                                   th:checked="*{trainings[__${itemStat.index}__].isImported} ? 'checked'"></td>
+                        <td><input type="text" th:field="*{trainings[__${itemStat.index}__].name}" th:hidden="true"/>
+                            <a class="thTr" th:text="${training.name}"></a></td>
+                        <td><input type="text" th:field="*{trainings[__${itemStat.index}__].distance}"
+                                   th:hidden="true"/> <a class="thTr"  th:text="${training.distance}"></a>km
+                        </td>
+                        <td><input type="text" th:field="*{trainings[__${itemStat.index}__].workoutType}"
+                                   th:hidden="true"/> <a class="thTr" th:text="${training.workoutType}"></a></td>
+                        <td><input type="text" th:field="*{trainings[__${itemStat.index}__].movingTime}"
+                                   th:hidden="true"/> <a class="thTr" th:text="${training.movingTime}"></a></td>
+                        <td><input type="text" th:field="*{trainings[__${itemStat.index}__].startDate}"
+                                   th:hidden="true"/> <a class="thTr"
+                                th:text="${#temporals.format(training.startDate, 'dd-MM-yyyy HH:mm')}"></a></td>
+                        <td><input type="text" th:field="*{trainings[__${itemStat.index}__].avgSpeed}"
+                                   th:hidden="true"/> <a class="thTr" th:text="${training.avgSpeed}"></a> km/h
+                        </td>
+                        <td><input type="text" th:field="*{trainings[__${itemStat.index}__].avgPace}" th:hidden="true"/>
+                            <a class="thTr" th:text="${#strings.substring(training.avgPace,3,8)}"></a> min/km
+                        </td>
+
+                        <td><input type="text" th:field="*{trainings[__${itemStat.index}__].calories}"
+                                   th:hidden="true"/> <a class="thTr" th:text="${training.calories}"></a> kalc
+                        </td>
+
+                        <td>
+                            <a class="fa fa-edit" th:href="@{/training/edit/{id}(id=${training.id})}"></a>
+                            <a class="fa fa-trash" th:href="@{/training/delete/{id}(id=${training.id})}"></a>
+                        </td>
+
                     </tr>
                     </tbody>
                 </table>
             </fieldset>
-            <input type="submit" id="submitButton" th:value="Save">
+            <input type="submit" id="submitButton" th:value="Analizuj" class="btn btn-success">
         </form>
     </div>
 </div>

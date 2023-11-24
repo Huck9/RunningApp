@@ -39,6 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/strava/**").authenticated()
                 .antMatchers("/training/save").authenticated()
                 .antMatchers("/training/**").authenticated()
+                .antMatchers("/training/all").authenticated()
 
                 .and()
                 .formLogin()

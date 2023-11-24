@@ -6,8 +6,17 @@
 <!-- Page content goes here -->
 <div class="container">
     <div class="jumbotron">
+
+        <form method="post" th:object="${monthDto}">
+            <input type="month" th:field="*{date}">
+            <select class="form-select" aria-label="Typ treninngu" th:field="*{trainingType}">
+                <option th:value="'Run'">Bieganie</option>
+                <option th:value="'Cycling'">Rower</option>
+                <option th:value="'Swim'">Pływanie</option>
+            </select>
+            <button type="submit" class="btn btn-success">Pokaż</button>
+        </form>
         <div sec:authorize="isAuthenticated()">
-            <h1>Twoje wszystkie statystyki</h1>
             <h2> Łączna liczba treningów: <a th:text="${statistic?.trainingCount}"></a></h2>
             <h2> Łączny czas trwania treningów: <a th:text="${statistic?.sumMovingTime}"></a></h2>
             <h2> Średni czas trwania treningów: <a th:text="${statistic?.avgMovingTime}"></a></h2>
@@ -19,13 +28,6 @@
             <h2> Średnia prędkość: <a th:text="${statistic?.avgSpeed}"></a> km/h</h2>
         </div>
 
-        <form form-method="post" th:action="@{/registration}" >
-            <h1 sec:authorize="isAnonymous()">Nie masz konta?</h1>
-            <button sec:authorize="isAnonymous()" th:href="@{~/registration}"
-                    class="btn btn-info my-2 my-sm-0 btn-sm" type="submit">Zarejestruj się
-            </button>
-
-        </form>
     </div>
 </div>
 </body>

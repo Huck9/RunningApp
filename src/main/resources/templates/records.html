@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<!-- Page content goes here -->
+<div class="container">
+    <div class="jumbotron">
+        <div sec:authorize="isAuthenticated()">
+            <h1>Twoje rekordy!</h1>
+            <form method="post" th:object="${trainingType}">
+                <select class="form-select" aria-label="Typ treninngu" th:field="*{trainingType}">
+                    <option th:value="'Run'">Bieganie</option>
+                    <option th:value="'Cycling'">Rower</option>
+                    <option th:value="'Swim'">Pływanie</option>
+                </select>
+                <button type="submit" class="btn btn-success">Pokaż</button>
+            </form>
+            <div th:switch="${trainingType.trainingType}">
+                <div th:case="Run">
+                    <h2> Najdłuższy bieg: <a th:text="${records?.avgMovingTime}"></a></h2>
+                    <h2> Najwięcej kilometrów podczas jednego treningu: <a th:text="${records?.sumDistance}"></a> km
+                    </h2>
+                    <h2> Największa ilość spalonych kalorii: <a th:text="${records?.sumCalories}"></a> kcal</h2>
+                    <h2> Najwyższe tempo: <a th:text="${#strings.substring(records?.avgPace,3,8)}"></a> min/km</h2>
+                    <h2> Najwyższa prędkość: <a th:text="${records?.avgSpeed}"></a> km/h</h2>
+                    <h2> Najszybsze 5km: <a th:text="${records?.fivekm}"></a> </h2>
+                    <h2> Najszybsze 10km: <a th:text="${records?.tenkm}"></a> </h2>
+                    <h2> Najszybszy półmaraton: <a th:text="${records?.halfmarathon}"></a> </h2>
+                    <h2> Najszybsze maraton: <a th:text="${records?.marathon}"></a> </h2>
+
+                </div>
+                <div th:case="Cycling">
+                    <h2> Najdłuższa jazda na rowerze: <a th:text="${cycling?.avgMovingTime}"></a></h2>
+                    <h2> Najwięcej kilometrów podczas jednego treningu: <a th:text="${cycling?.sumDistance}"></a> km
+                    </h2>
+                    <h2> Największa ilość spalonych kalorii: <a th:text="${cycling?.sumCalories}"></a> kcal</h2>
+                    <h2> Najwyższe tempo: <a th:text="${#strings.substring(cycling?.avgPace,3,8)}"></a> min/km</h2>
+                    <h2> Najwyższa prędkość: <a th:text="${cycling?.avgSpeed}"></a> km/h</h2>
+                    <h2> Najszybsze 10km: <a th:text="${cycling?.tenkm}"></a> </h2>
+                    <h2> Najszybsze 25km: <a th:text="${cycling?.twentyFiveKm}"></a> </h2>
+                    <h2> Najszybszy 50km: <a th:text="${cycling?.fiftyKm}"></a> </h2>
+                    <h2> Najszybsze 100km: <a th:text="${cycling?.hundredKm}"></a> </h2>
+                </div>
+                <div th:case="Swim">
+                    <h2> Najdłuższy trening pływania: <a th:text="${swim?.avgMovingTime}"></a></h2>
+                    <h2> Najdłuższy dystans podczas jednego treningu: <a th:text="${swim?.sumDistance}"></a> km</h2>
+                    <h2> Największa ilość spalonych kalorii: <a th:text="${swim?.sumCalories}"></a> kcal</h2>
+                    <h2> Najwyższe tempo: <a th:text="${#strings.substring(swim?.avgPace,3,8)}"></a> min/km</h2>
+                    <h2> Najwyższa prędkość: <a th:text="${swim?.avgSpeed}"></a> km/h</h2>
+                    <h2> Najszybsze 50m: <a th:text="${swim?.m50}"></a> </h2>
+                    <h2> Najszybsze 100m: <a th:text="${swim?.m100}"></a> </h2>
+                    <h2> Najszybszy 200m: <a th:text="${swim?.m200}"></a> </h2>
+                    <h2> Najszybsze 400m: <a th:text="${swim?.m400}"></a> </h2>
+                    <h2> Najszybsze 800m: <a th:text="${swim?.m800}"></a> </h2>
+                    <h2> Najszybsze 1500m: <a th:text="${swim?.m1500}"></a> </h2>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

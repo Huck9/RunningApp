@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<!-- Page content goes here -->
+<div class="container">
+    <div class="jumbotron">
+     <form method="post" action="/training/save" th:object="${trainingDto}">
+
+            <fieldset>
+                <table>
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nazwa</th>
+                        <th>Dystans</th>
+                        <th>Typ treningu</th>
+                        <th>Czas trwania</th>
+                        <th>Data rozpoczęcia</th>
+                        <th>Średnia prędkość</th>
+                        <th>Średnie tempo</th>
+                        <th>Kalorie</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="training, itemStat : ${trainingDto.trainings}">
+                        <td> <input type="checkbox" name="mycheckbox" th:field="*{trainings[__${itemStat.index}__].imported}" th:checked="*{trainings[__${itemStat.index}__].isImported} ? 'checked'"> </td>
+                        <td >  <input type="text"  th:field="*{trainings[__${itemStat.index}__].name}" th:hidden="true"/> <a th:text="${training.name}"></a> </td>
+                        <td >  <input type="text"  th:field="*{trainings[__${itemStat.index}__].distance}" th:hidden="true"/> <a th:text="${training.distance}"></a>km </td>
+                        <td >  <input type="text"  th:field="*{trainings[__${itemStat.index}__].workoutType}" th:hidden="true"/> <a th:text="${training.workoutType}"> </a> </td>
+                        <td >  <input type="text"  th:field="*{trainings[__${itemStat.index}__].movingTime}" th:hidden="true"/> <a th:text="${training.movingTime}"></a> </td>
+                        <td >  <input type="text"  th:field="*{trainings[__${itemStat.index}__].startDate}" th:hidden="true"/> <a th:text="${#temporals.format(training.startDate, 'dd-MM-yyyy HH:mm')}"></a> </td>
+                        <td >  <input type="text" th:field="*{trainings[__${itemStat.index}__].avgSpeed}" th:hidden="true"/> <a th:text="${training.avgSpeed}"></a> km/h </td>
+                        <td >  <input type="text" th:field="*{trainings[__${itemStat.index}__].avgPace}" th:hidden="true"/> <a th:text="${training.avgPace}"></a> min/km </td>
+                        <td >  <input type="text"  th:field="*{trainings[__${itemStat.index}__].calories}" th:hidden="true"/> <a th:text="${training.calories}"></a> kalc </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <input type="submit" id="submitButton" th:value="Zapisz" class="btn btn-success">
+        </form>
+    </div>
+</div>
+</body>
+</html>

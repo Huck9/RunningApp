@@ -1,5 +1,6 @@
 package com.example.runningapp.Controller;
 
+import com.example.runningapp.Service.IndexService;
 import com.example.runningapp.Service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,16 +18,21 @@ import javax.validation.Valid;
 public class HomeController {
 
     private final RegistrationService registrationService;
+    private final IndexService indexService;
+
 
     @GetMapping("index")
-    public String index(){
+    public String index(Model model) {
+        model.addAttribute("statistic", indexService.getAllStatistic());
         return "index";
     }
 
     @GetMapping("login")
-    public String login(){return "login";}
+    public String login() {
+        return "login";
+    }
 
-    @GetMapping("/registration")
+    @GetMapping("registration")
     public String showRegistrationForm(WebRequest request, Model model) {
         UserDto userDto = new UserDto();
         model.addAttribute("user", userDto);
@@ -38,5 +44,4 @@ public class HomeController {
         registrationService.register(user);
         return "redirect:/index";
     }
-
 }

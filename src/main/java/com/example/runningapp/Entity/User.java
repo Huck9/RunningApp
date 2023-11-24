@@ -3,6 +3,7 @@ package com.example.runningapp.Entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,8 @@ public class User {
 
     private String roles = "";
 
+    @OneToMany(mappedBy = "user")
+    private List<Training> trainings = new ArrayList<>();
 
     public List<String> getRoleList() {
         if (this.roles.length() > 0) {

@@ -67,5 +67,4 @@ public class StravaTraining {
     private Long total_photo_count;
     private boolean has_kudoed;
     private Float suffer_score;
-
 }
